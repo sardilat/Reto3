@@ -8,10 +8,10 @@ import reto3.service.CategoryService;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/Category")
-@CrossOrigin(origins = "*", methods={RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
+
 
 public class CategoryController {
 
@@ -30,14 +30,14 @@ public class CategoryController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Category save(@RequestBody Category c){
-        return categoryService.save(c);
+    public Category save(@RequestBody Category category){
+        return categoryService.save(category);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Category update(@RequestBody Category c){
-        return categoryService.update(c);
+    public Category update(@RequestBody Category category){
+        return categoryService.update(category);
     }
 
     @DeleteMapping("/{id}")

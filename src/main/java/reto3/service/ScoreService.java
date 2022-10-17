@@ -22,44 +22,44 @@ public class ScoreService {
         return scoreRepository.getScore(id);
     }
 
-    public Score save(Score m){
-        if(m.getIdScore()==null){
-            return scoreRepository.save(m);
+    public Score save(Score score){
+        if(score.getIdScore()==null){
+            return scoreRepository.save(score);
         }else{
-            Optional<Score> e = scoreRepository.getScore(m.getIdScore());
-            if(e.isPresent()){
-                return m;
+            Optional<Score> scoreEncontrado = getScore(score.getIdScore());
+            if(scoreEncontrado.isEmpty()){
+                return scoreRepository.save(score);
             }else {
-                return scoreRepository.save(m);
+                return score;
             }
         }
 
     }
 
-    public Score update(Score m){
-        if (m.getIdScore()!=null){
-            Optional<Score> e = scoreRepository.getScore(m.getIdScore());
-            if(e.isPresent()){
-                if (m.getScore()!= null){
-                    e.get().setScore(m.getScore());
+    public Score update(Score score){
+        if (score.getIdScore()!=null){
+            Optional<Score> scoreEncontrado = getScore(score.getIdScore());
+            if(!scoreEncontrado.isEmpty()){
+                if (score.getMessageText()!= null){
+                    scoreEncontrado.get().setMessageText(score.getMessageText());
                 }
-                scoreRepository.save(e.get());
-                return e.get();
-            }else{
-                return m;
+                if (score.getStars()!= null){
+                    scoreEncontrado.get().setStars(score.getStars());
+                }
+                return scoreRepository.save(scoreEncontrado.get());
             }
-        }else{
-            return m;
+
         }
+        return score;
     }
+
 
     public boolean delete(int id){
-        Optional<Score> m = scoreRepository.getScore(id);
-        boolean flag = false;
-        if (m.isPresent()){
-            scoreRepository.delete(m.get());
-            flag = true;
-        }
-        return flag;
+        Boolean respuesta = getScore(id).map(elemento ->{
+            scoreRepository.delete(elemento);
+            return true;
+        }).orElse(false);
+
+        return respuesta;
     }
 }

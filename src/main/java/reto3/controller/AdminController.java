@@ -9,6 +9,7 @@ import reto3.service.AdminService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/Admin")
 public class AdminController {
@@ -22,25 +23,24 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Admin> getById(@PathVariable("id") int id){
+    public Optional<Admin> getAdmin(@PathVariable("id") int id){
         return adminService.getAdmin(id);
     }
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Admin save(@RequestBody Admin s){
-        return adminService.save(s);
+    public Admin save(@RequestBody Admin admin){
+        return adminService.save(admin);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Admin update(@RequestBody Admin c){
-        return adminService.update(c);
+    public Admin update(@RequestBody Admin admin){
+        return adminService.update(admin);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") int id){
-        return adminService.delete(id);
+    public boolean delete(@PathVariable("id") int id){ return adminService.delete(id);
     }
 }

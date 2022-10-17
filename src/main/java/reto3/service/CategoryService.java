@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import reto3.model.Category;
 import reto3.repository.CategoryRepository;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Service
 public class CategoryService {
@@ -26,58 +24,42 @@ public class CategoryService {
         return categoryRepository.getCategory(id);
     }
 
-    public Category save(Category c){
-        if(c.getId()==null){
-            return categoryRepository.save(c);
+    public Category save(Category category){
+        if(category.getId()==null){
+            return categoryRepository.save(category);
         }else{
-            Optional<Category> e = categoryRepository.getCategory(c.getId());
-            if(e.isPresent()){
-                return c;
+            Optional<Category> categoryEncontrada = categoryRepository.getCategory(category.getId());
+            if(categoryEncontrada.isEmpty()){
+                return categoryRepository.save(category);
             }else {
-                return categoryRepository.save(c);
+                return category;
             }
         }
 
     }
 
-    public Category update(Category c){
-        if (c.getId()!=null){
-            Optional<Category> m = categoryRepository.getCategory(c.getId());
-            if(m.isPresent()){
-                for (Field f : c.getClass().getDeclaredFields()) {
-                    f.setAccessible(true);
-                    Object value;
-                    try {
-                        value = f.get(c);
-                        if (value != null) {
-                            System.out.println("entro");
-                            f.set(m.get(), value);
-                        }
-                    } catch (IllegalArgumentException ex) {
-                        Logger.getLogger(CategoryService.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IllegalAccessException ex) {
-                        Logger.getLogger(CategoryService.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+    public Category update(Category category){
+        if (category.getId()!=null){
+            Optional<Category> categoryEncontrada = categoryRepository.getCategory(category.getId());
+            if(!categoryEncontrada.isEmpty()){
+                if(category.getDescription()!=null) {
+                    categoryEncontrada.get().setDescription(category.getDescription());
                 }
-
-                categoryRepository.save(m.get());
-                return m.get();
-            }else{
-                return c;
+                if(category.getName()!=null){
+                        categoryEncontrada.get().setName(category.getName());
+                }
+                return categoryRepository.save(categoryEncontrada.get());
             }
-        }else{
-            return c;
         }
+        return category;
     }
-
     public boolean delete(int id){
-        Optional<Category> c = categoryRepository.getCategory(id);
-        boolean flag = false;
-        if (c.isPresent()){
-            categoryRepository.delete(c.get());
-            flag = true;
-        }
-        return flag;
+        Boolean respuesta = getCategory(id).map(elemento ->{
+            categoryRepository.delete(elemento);
+            return true;
+        }).orElse(false);
+
+        return respuesta;
     }
 
 

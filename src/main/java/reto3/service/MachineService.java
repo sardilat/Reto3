@@ -23,53 +23,53 @@ public class MachineService {
         return machineRepository.getMachine(id);
     }
 
-    public Machine save(Machine p){
-        if(p.getId()==null){
-            return machineRepository.save(p);
+    public Machine save(Machine machine){
+        if(machine.getId()==null){
+            return machineRepository.save(machine);
         }else{
-            Optional<Machine> e =machineRepository.getMachine(p.getId());
-            if(e.isPresent()){
-                return p;
+            Optional<Machine> machineEncontrado = getMachine(machine.getId());
+            if(machineEncontrado.isEmpty()){
+                return machineRepository.save(machine);
             }else {
-                return machineRepository.save(p);
+                return machine;
             }
         }
 
     }
 
-    public Machine update(Machine p){
-        if (p.getId()!=null){
-            Optional<Machine> m = machineRepository.getMachine(p.getId());
-            if(m.isPresent()){
-                if (p.getBrand()!= null){
-                    m.get().setBrand(p.getBrand());
+    public Machine update(Machine machine){
+        if (machine.getId()!=null){
+            Optional<Machine> machineEncontrado = getMachine(machine.getId());
+            if(!machineEncontrado.isEmpty()){
+                if (machine.getName()!= null){
+                    machineEncontrado.get().setName(machine.getName());
                 }
-                if(p.getCategory()!=null){
-                    m.get().setCategory(p.getCategory());
+                if(machine.getBrand()!=null){
+                    machineEncontrado.get().setBrand(machine.getBrand());
                 }
-                if (p.getDescription()!=null){
-                    m.get().setDescription(p.getDescription());
+                if (machine.getYear()!=null){
+                    machineEncontrado.get().setYear(machine.getYear());
                 }
-                if (p.getName()!=null) {
-                    m.get().setName(p.getName());
+                if (machine.getDescription()!=null) {
+                    machineEncontrado.get().setDescription(machine.getDescription());
                 }
-                machineRepository.save(m.get());
-                return m.get();
-            }else{
-                return p;
+                if (machine.getCategory()!=null) {
+                    machineEncontrado.get().setCategory(machine.getCategory());
+                }
+                return machineRepository.save(machineEncontrado.get());
             }
-        }else{
-            return p;
+
         }
+        return machine;
     }
+
 
     public boolean delete(int id){
-        Optional<Machine> m = machineRepository.getMachine(id);
-        boolean flag = false;
-        if (m.isPresent()){
-            machineRepository.delete(m.get());
-            flag = true;
-        }
-        return flag;
+        Boolean respuesta = getMachine(id).map(elemento ->{
+            machineRepository.delete(elemento);
+            return  true;
+        }).orElse(false);
+
+        return respuesta;
     }
 }

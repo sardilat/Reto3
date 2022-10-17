@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 ;
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/Reservation")
 public class ReservationController {
@@ -24,20 +24,20 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Reservation> getById(@PathVariable("id") int id){
+    public Optional<Reservation> getReservation(@PathVariable("id") int id){
         return reservationService.getReservation(id);
     }
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Reservation save(@RequestBody Reservation r){
-        return reservationService.save(r);
+    public Reservation save(@RequestBody Reservation reservation){
+        return reservationService.save(reservation);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Reservation update(@RequestBody Reservation r){
-        return reservationService.update(r);
+    public Reservation update(@RequestBody Reservation reservation){
+        return reservationService.update(reservation);
     }
 
     @DeleteMapping("/{id}")

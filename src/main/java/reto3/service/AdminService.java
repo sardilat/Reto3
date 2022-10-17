@@ -22,50 +22,43 @@ public class AdminService {
         return adminRepository.getAdmin(id);
     }
 
-    public Admin save(Admin a){
-        if(a.getId()==null){
-            return adminRepository.save(a);
+    public Admin save(Admin admin){
+        if(admin.getId()==null){
+            return adminRepository.save(admin);
         }else{
-            Optional<Admin> e = adminRepository.getAdmin(a.getId());
-            if(e.isPresent()){
-                return a;
+            Optional<Admin> adminEncontrado = adminRepository.getAdmin(admin.getId());
+            if(adminEncontrado.isEmpty()){
+                return adminRepository.save(admin);
             }else {
-                return adminRepository.save(a);
+                return admin;
             }
         }
 
     }
 
-    public Admin update(Admin ad){
-        if (ad.getId()!=null){
-            Optional<Admin> z = adminRepository.getAdmin(ad.getId());
-            if(z.isPresent()){
-               if(ad.getName()!=null){
-                    z.get().setName(ad.getName());
+    public Admin update(Admin admin){
+        if (admin.getId()!=null){
+            Optional<Admin> adminEncontrado = getAdmin(admin.getId());
+            if(!adminEncontrado.isEmpty()){
+               if(admin.getPassword()!=null){
+                    adminEncontrado.get().setPassword(admin.getPassword());
                }
-                if(ad.getEmail()!=null){
-                    z.get().setEmail(ad.getEmail());
+                if(admin.getName()!=null){
+                    adminEncontrado.get().setName(admin.getName());
                 }
-                if (ad.getPassword()!=null){
-                    z.get().setPassword(ad.getPassword());
-                }
-                adminRepository.save(z.get());
-                return z.get();
-            }else{
-                return ad;
+                return adminRepository.save(adminEncontrado.get());
             }
-        }else{
-            return ad;
+
         }
-    }
+        return admin;
+        }
+
 
     public boolean delete(int id){
-        Optional<Admin> a = adminRepository.getAdmin(id);
-        boolean flag = false;
-        if (a.isPresent()){
-            adminRepository.delete(a.get());
-            flag = true;
-        }
-        return flag;
+        Boolean respuesta = getAdmin(id).map(elemento -> {
+            adminRepository.delete(elemento);
+            return true;
+        }).orElse(false);
+        return respuesta;
     }
 }

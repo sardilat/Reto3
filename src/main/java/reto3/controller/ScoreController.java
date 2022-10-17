@@ -9,7 +9,7 @@ import reto3.service.ScoreService;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/Score")
 public class ScoreController {
@@ -29,14 +29,14 @@ public class ScoreController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Score save(@RequestBody Score s){
-        return scoreService.save(s);
+    public Score save(@RequestBody Score score){
+        return scoreService.save(score);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Score update(@RequestBody Score c){
-        return scoreService.update(c);
+    public Score update(@RequestBody Score score){
+        return scoreService.update(score);
     }
 
     @DeleteMapping("/{id}")

@@ -14,23 +14,21 @@ public class Machine implements Serializable {
     private Integer id;
     private String name;
     private String brand;
-    @Column(name="years")
-    private Integer year;
+    //@Column(name="years")
+    private Integer year; // numero entero de 4 digitos
     private String description;
     @ManyToOne
     @JoinColumn(name = "categoryId")
     @JsonIgnoreProperties("machines")
     private Category category;
 
+
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "machine")
     @JsonIgnoreProperties({"machine", "client"})
     private List<Message> messages;
-
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "machine")
     @JsonIgnoreProperties({"machine", "messages"})
-        private List<Reservation> reservations;
-
-
+    private List<Reservation> reservations;
     public Integer getId() {
         return id;
     }

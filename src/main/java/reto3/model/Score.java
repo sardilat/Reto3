@@ -10,7 +10,8 @@ public class Score implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idScore;
-    private Integer score;
+    private String messageText;
+    private Integer stars;
 
     @OneToOne
     @JsonIgnoreProperties("score")
@@ -24,12 +25,20 @@ public class Score implements Serializable {
         this.idScore = idScore;
     }
 
-    public Integer getScore() {
-        return score;
+    public String getMessageText() {
+        return messageText;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public Integer getStars() {
+        return stars;
+    }
+
+    public void setStars(Integer stars) {
+        this.stars = stars;
     }
 
     public Reservation getReservation() {

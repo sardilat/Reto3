@@ -8,7 +8,7 @@ import reto3.service.MessageService;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/Message")
 public class MessageController {
@@ -28,14 +28,14 @@ public class MessageController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Message save(@RequestBody Message m){
-        return messageService.save(m);
+    public Message save(@RequestBody Message message){
+        return messageService.save(message);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Message update(@RequestBody Message c){
-        return messageService.update(c);
+    public Message update(@RequestBody Message message){
+        return messageService.update(message);
     }
 
     @DeleteMapping("/{id}")

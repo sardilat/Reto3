@@ -9,7 +9,7 @@ import reto3.service.ClientService;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/Client")
 public class ClientController {
@@ -23,20 +23,20 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Client> getById(@PathVariable("id") int id){
+    public Optional<Client> getClient(@PathVariable("id") int id){
         return clientService.getClient(id);
     }
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client save(@RequestBody Client c){
-        return clientService.save(c);
+    public Client save(@RequestBody Client client){
+        return clientService.save(client);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client update(@RequestBody Client c){
-        return clientService.update(c);
+    public Client update(@RequestBody Client client){
+        return clientService.update(client);
     }
 
     @DeleteMapping("/{id}")

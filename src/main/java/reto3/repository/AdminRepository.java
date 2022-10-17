@@ -18,16 +18,16 @@ public class AdminRepository {
          return (List<Admin>) adminCrudRepository.findAll();
      }
 
-     public Optional<Admin> getAdmin(int idAdmin){
-          return adminCrudRepository.findById(idAdmin);
+     public Optional<Admin> getAdmin(int id){
+          return adminCrudRepository.findById(id);
      }
 
-     public Admin save(Admin s){
-          return adminCrudRepository.save(s);
+     public Admin save(Admin admin){
+          return adminCrudRepository.save(admin);
      }
 
-     public void delete(Admin s){
-          adminCrudRepository.delete(s);
+     public void delete(Admin admin){
+          adminCrudRepository.delete(admin);
      }
 
 }

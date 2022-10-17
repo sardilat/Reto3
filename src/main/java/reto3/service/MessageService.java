@@ -24,44 +24,40 @@ public class MessageService {
         return messageRepository.getMessage(id);
     }
 
-    public Message save(Message m){
-        if(m.getIdMessage()==null){
-            return messageRepository.save(m);
+    public Message save(Message message){
+        if(message.getIdMessage()==null){
+            return messageRepository.save(message);
         }else{
-            Optional<Message> e = messageRepository.getMessage(m.getIdMessage());
-            if(e.isPresent()){
-                return m;
+            Optional<Message> messageEncontrado = messageRepository.getMessage(message.getIdMessage());
+            if(messageEncontrado.isEmpty()){
+                return messageRepository.save(message);
             }else {
-                return messageRepository.save(m);
+                return message;
             }
         }
 
     }
 
-    public Message update(Message m){
-        if (m.getIdMessage()!=null){
-            Optional<Message> e = messageRepository.getMessage(m.getIdMessage());
-            if(e.isPresent()){
-                if (m.getMessageText()!= null){
-                    e.get().setMessageText(m.getMessageText());
+    public Message update(Message message){
+        if (message.getIdMessage()!=null){
+            Optional<Message> messageEncontrado = getMessage(message.getIdMessage());
+            if(!messageEncontrado.isEmpty()){
+                if (message.getMessageText()!= null){
+                    messageEncontrado.get().setMessageText(message.getMessageText());
                 }
-                messageRepository.save(e.get());
-                return e.get();
-            }else{
-                return m;
+                return messageRepository.save(messageEncontrado.get());
             }
-        }else{
-            return m;
         }
+            return message;
+
     }
 
     public boolean delete(int id){
-        Optional<Message> m = messageRepository.getMessage(id);
-        boolean flag = false;
-        if (m.isPresent()){
-            messageRepository.delete(m.get());
-            flag = true;
-        }
-        return flag;
+        Boolean respuesta = getMessage(id).map(elemento ->{
+            messageRepository.delete(elemento);
+            return true;
+        }).orElse(false);
+
+        return respuesta;
     }
 }

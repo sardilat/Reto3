@@ -23,53 +23,46 @@ public class ClientService {
         return clientRepository.getClient(id);
     }
 
-    public Client save(Client c){
-        if(c.getIdClient()==null){
-            return clientRepository.save(c);
+    public Client save(Client client){
+        if(client.getIdClient()==null){
+            return clientRepository.save(client);
         }else{
-            Optional<Client> e = clientRepository.getClient(c.getIdClient());
-            if(e.isPresent()){
-                return c;
+            Optional<Client> clienteEncontrado = getClient(client.getIdClient());
+            if(clienteEncontrado.isEmpty()){
+                return clientRepository.save(client);
             }else {
-                return clientRepository.save(c);
+                return client;
             }
         }
 
     }
 
-    public Client update(Client c){
-        if (c.getIdClient()!=null){
-            Optional<Client> m = clientRepository.getClient(c.getIdClient());
-            if(m.isPresent()){
-                if(c.getName()!= null){
-                    m.get().setName(c.getName());
+    public Client update(Client client){
+        if (client.getIdClient()!=null){
+            Optional<Client> clienteEncontrado = getClient(client.getIdClient());
+            if(!clienteEncontrado.isEmpty()){
+                if(client.getName()!= null){
+                    clienteEncontrado.get().setName(client.getName());
                 }
-                if(c.getEmail()!=null){
-                    m.get().setEmail(c.getEmail());
+                if(client.getAge()!=null){
+                    clienteEncontrado.get().setAge(client.getAge());
                 }
-                if (c.getPassword()!=null){
-                    m.get().setPassword(c.getPassword());
+                if (client.getPassword()!=null){
+                    clienteEncontrado.get().setPassword(client.getPassword());
                 }
-                if (c.getAge()!=null) {
-                    m.get().setAge(c.getAge());
+                return clientRepository.save(clienteEncontrado.get());
                 }
-                clientRepository.save(m.get());
-                return m.get();
-            }else{
-                return c;
-            }
-        }else{
-            return c;
         }
+        return client;
     }
+
 
     public boolean delete(int id){
-        Optional<Client> m = clientRepository.getClient(id);
-        boolean flag = false;
-        if (m.isPresent()){
-            clientRepository.delete(m.get());
-            flag = true;
-        }
-        return flag;
+        Boolean respuesta = getClient(id).map(elemento ->{
+            clientRepository.delete(elemento);
+            return true;
+        }).orElse(false);
+
+        return respuesta;
     }
 }

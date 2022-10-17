@@ -24,11 +24,11 @@ public class MachineRepository {
          return machineCrudRepository.findById(id);
     }
 
-    public Machine save(Machine m){
-         return machineCrudRepository.save(m);
+    public Machine save(Machine machine){
+         return machineCrudRepository.save(machine);
     }
 
-    public void delete(Machine m){
-         machineCrudRepository.delete(m);
+    public void delete(Machine machine){
+         machineCrudRepository.delete(machine);
     }
 }
