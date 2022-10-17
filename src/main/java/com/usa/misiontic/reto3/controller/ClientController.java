@@ -1,8 +1,8 @@
-package com.usa.misiontic.masterclass3.controller;
+package com.usa.misiontic.reto3.controller;
 
 
-import com.usa.misiontic.masterclass3.entities.Client;
-import com.usa.misiontic.masterclass3.service.ClientService;
+import com.usa.misiontic.reto3.entities.Client;
+import com.usa.misiontic.reto3.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

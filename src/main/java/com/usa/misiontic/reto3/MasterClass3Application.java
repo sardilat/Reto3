@@ -1,4 +1,4 @@
-package com.usa.misiontic.masterclass3;
+package com.usa.misiontic.reto3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

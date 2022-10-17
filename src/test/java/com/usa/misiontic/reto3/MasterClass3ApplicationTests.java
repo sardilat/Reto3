@@ -1,4 +1,4 @@
-package com.usa.misiontic.masterclass3;
+package com.usa.misiontic.reto3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

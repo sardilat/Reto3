@@ -1,8 +1,8 @@
-package com.usa.misiontic.masterclass3.controller;
+package com.usa.misiontic.reto3.controller;
 
 
-import com.usa.misiontic.masterclass3.entities.Category;
-import com.usa.misiontic.masterclass3.service.CategoryService;
+import com.usa.misiontic.reto3.entities.Category;
+import com.usa.misiontic.reto3.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/Category")
 public class CategoryController {
-
     @Autowired
     private CategoryService categoryService;
 

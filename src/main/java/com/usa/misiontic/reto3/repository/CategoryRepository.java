@@ -1,7 +1,7 @@
-package com.usa.misiontic.masterclass3.repository;
+package com.usa.misiontic.reto3.repository;
 
-import com.usa.misiontic.masterclass3.entities.Category;
-import com.usa.misiontic.masterclass3.repository.crudRepository.CategoryCrudRepository;
+import com.usa.misiontic.reto3.entities.Category;
+import com.usa.misiontic.reto3.repository.crudRepository.CategoryCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,6 @@ public class CategoryRepository {
     public List<Category> getAll(){
         return (List<Category>) categoryCrudRepository.findAll();
     }
-
     public Optional<Category> getCategory(int id){
         return categoryCrudRepository.findById(id);
     }
@@ -26,5 +25,4 @@ public class CategoryRepository {
     public void delete(Category c){
         categoryCrudRepository.delete(c);
     }
-
 }
