@@ -22,7 +22,7 @@ public class Reservation implements Serializable {
 
 //****************************** RELATIONS
     @ManyToOne
-    @JoinColumn(name = "machine")
+    @JoinColumn(name ="machine")
     @JsonIgnoreProperties("reservations")
     private Machine machine;
 

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "machine")
+
 public class Machine implements Serializable {
 
     @Id
@@ -22,7 +23,7 @@ public class Machine implements Serializable {
     //**************************  RELATIONS
     @ManyToOne
     @JoinColumn(name = "category")
-    @JsonIgnoreProperties("machines")
+    @JsonIgnoreProperties("machine")
     private Category category;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "machine")
